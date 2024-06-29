@@ -5,4 +5,3 @@ export const sortKey = writable("semimajorAxis");
 export const sortDirection = writable("asc");
 export const selectedBodies = writable([]);
 
-

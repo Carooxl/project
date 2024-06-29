@@ -19,8 +19,3 @@ export function sortPlanets(bodies, key, direction) {
         return 0;
     });
 }
-
-
-export function decimalSeparators(input) {
-    return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
-}
