@@ -138,25 +138,30 @@
         gap: 1em;
         margin-top: 40px;
     }
+
     button {
-        width: 200px;
+        width: 150px;
         padding: 10px 20px;
-        background-color: #1b263d;
+        background-color: rgba(27, 38, 61, 0.6);
         color: white;
+        border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 1em;
-        border: 1px solid #ddd;
-        margin-bottom: 10px;
-        margin-right: 10px;
-    }
-
-    .reset-button {
-        background-color: #1b263d;
+        font-size: 0.9em;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
 
     button:hover {
-        background-color: #2d3953;
+        background-color: rgba(45, 57, 83, 0.5);
+    }
+
+    .reset-button {
+        background-color: rgba(27, 38, 61, 0.6);
+    }
+
+    .reset-button:hover {
+        background-color: rgba(45, 57, 83, 0.5);
     }
 
     table {

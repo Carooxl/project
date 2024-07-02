@@ -56,18 +56,26 @@
     button {
         width: 150px;
         padding: 10px 20px;
-        background-color: #1b263d;
+        background-color: rgba(27, 38, 61, 0.6);
         color: white;
+        border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 0.8em;
-        border: 1px solid #ddd;
-        text-align: center;
-        margin-bottom: 10px;
+        font-size: 0.9em;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
 
     button:hover {
-        background-color: #2d3953;
+        background-color: rgba(45, 57, 83, 0.5);
+    }
+
+    .reset-button {
+        background-color: rgba(27, 38, 61, 0.6);
+    }
+
+    .reset-button:hover {
+        background-color: rgba(45, 57, 83, 0.5);
     }
 
     #card-container {
@@ -76,7 +84,6 @@
         justify-items: center;
         gap: 1em;
         color: #222;
-        cursor: pointer;
         transition: transform 0.3s ease-in-out;
         margin-top: 60px;
         margin-bottom: 40px;
@@ -89,8 +96,8 @@
 
         button {
             width: 120px;
-            padding: 5px 10px;
-            font-size: 0.7em;
+            padding: 8px 16px;
+            font-size: 0.8em;
         }
 
         #card-container {

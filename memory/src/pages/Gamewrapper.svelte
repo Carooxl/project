@@ -2,6 +2,8 @@
     import GameCard from "../components/GameCard.svelte";
     import { onMount } from "svelte";
     import { selectedBodies } from "../store";
+    import { get } from "svelte/store";
+
     let categories = [
         "semimajorAxis",
         "meanRadius",
@@ -11,18 +13,35 @@
     ];
     let sortKey = "semimajorAxis";
     let selectedCards = [];
+    let turnCount = 0;
+    let pairCount = 0;
+    let shuffledBodies = [];
+    let previousCards = [];
 
-    function selectCategory(event) {
+    function selectCategory() {
         const randomIndex = Math.floor(Math.random() * categories.length);
         sortKey = categories[randomIndex];
-        // sortKey = event.target.value;
     }
 
-    selectCategory();
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 
     function onNewTurn() {
         selectCategory();
         selectedCards = [];
+        turnCount = 0;
+        pairCount = 0;
+        shuffledBodies = shuffle(
+            [...get(selectedBodies)].map((body) => ({
+                ...body,
+                visible: true,
+            })),
+        );
     }
 
     function handleCardSelect(event) {
@@ -30,59 +49,85 @@
         selectedCards = [...selectedCards, selectedBody];
 
         if (selectedCards.length === 2) {
-            checkPair(selectedCards);
-            selectedCards = [];
+            turnCount++;
+            setTimeout(() => {
+                checkPair(selectedCards);
+                previousCards = [...selectedCards];
+                selectedCards = [];
+            }, 500); // Delay the check by 500 milliseconds
         }
     }
-    function checkPair([card1, card2]) {
-        const bodies = $selectedBodies.map((body) => ({
-            name: body.name,
-            value: body[sortKey],
-        }));
-        bodies.sort((a, b) => a.value - b.value);
 
-        let closestPair = { body1: bodies[0], body2: bodies[1] };
-        let minDifference = Math.abs(bodies[1].value - bodies[0].value);
+    function areSameCards(cards1, cards2) {
+        return (
+            cards1.length === cards2.length &&
+            cards1.every((card, index) => card.id === cards2[index].id)
+        );
+    }
 
-        for (let i = 1; i < bodies.length - 1; i++) {
-            const diff = Math.abs(bodies[i + 1].value - bodies[i].value);
-            if (diff < minDifference) {
-                minDifference = diff;
-                closestPair = { body1: bodies[i], body2: bodies[i + 1] };
-            }
-        }
+    function checkPair(cards) {
+        if (cards[0][sortKey] === cards[1][sortKey]) {
+            pairCount++;
 
-        if (
-            (closestPair.body1.name === card1.name &&
-                closestPair.body2.name === card2.name) ||
-            (closestPair.body1.name === card2.name &&
-                closestPair.body2.name === card1.name)
-        ) {
-            alert("Correct Pair!");
+            // Set visible to false for both matched cards
+            cards[0].visible = false;
+            cards[1].visible = false;
+            // Update shuffledBodies to reflect changes
+            shuffledBodies = shuffledBodies.map((body) => {
+                if (body.id === cards[0].id || body.id === cards[1].id) {
+                    return { ...body, visible: false };
+                }
+                return body;
+            });
+            selectCategory();
         } else {
-            alert("Incorrect Pair, Try Again.");
+            // Flip the cards back over after a delay
+            setTimeout(() => {
+                shuffledBodies = shuffledBodies.map((body) => {
+                    if (body.id === cards[0].id || body.id === cards[1].id) {
+                        return { ...body, visible: true };
+                    }
+                    return body;
+                });
+                setTimeout(selectCategory, 6000);
+            }, 500); // Adjust the delay as needed
         }
     }
+
     onMount(() => {
-        selectCategory();
+        onNewTurn();
     });
 </script>
 
-<div>
+<div class="info-container">
     <p>Aktuelle Kategorie für den Zug: <strong>{sortKey}</strong></p>
+    <p>Anzahl der Züge: <strong>{turnCount}</strong></p>
+    <p>Gefundene Pärchen: <strong>{pairCount}</strong></p>
 </div>
 <div id="card-container">
-    {#each $selectedBodies as body}
-        <GameCard {body} {sortKey} on:select={handleCardSelect} />
+    {#each shuffledBodies as body, index}
+        {#if body.visible}
+            <GameCard {body} {sortKey} on:select={handleCardSelect} />
+        {/if}
     {/each}
 </div>
 
 <style>
-    p {
+    .info-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .info-container p {
+        margin: 0;
+        padding: 0 10px;
         font-size: 1em;
         color: #1b263d;
-        margin: 10px 0;
     }
+
     #card-container {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -91,7 +136,7 @@
         color: #222;
         cursor: pointer;
         transition: transform 0.3s ease-in-out;
-        margin-top: 40px;
+        margin-top: 50px;
         margin-bottom: 40px;
     }
 
@@ -102,6 +147,13 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 0.5em;
             margin-top: 20px;
+        }
+
+        .info-container p {
+            margin: 0;
+            padding: 0 10px;
+            font-size: 0.8em;
+            color: #1b263d;
         }
     }
 </style>

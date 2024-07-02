@@ -87,9 +87,11 @@
 >
     <div class="card-inner">
         <div class="card-front">
-            <h2>{body.englishName}</h2>
-            <h3>{body.bodyType}</h3>
-            <p>{sortKey}: {decimalSeparators(body[sortKey])}</p>
+            <div class="content-wrapper">
+                <h2>{body.englishName}</h2>
+                <h3>{body.bodyType}</h3>
+                <p>{sortKey}: {decimalSeparators(body[sortKey])}</p>
+            </div>
         </div>
         <div class="card-back">
             <img src="../back_image.jpg" alt="back_image" />
@@ -104,6 +106,14 @@
         background-size: cover;
         background-position: center;
         border-radius: 15px;
+    }
+    .content-wrapper {
+        width: 190px;
+        height: 194px;
+        border: 3px solid rgba(3, 39, 122, 0.5);
+        padding: 5px;
+        border-radius: 10px;
+        box-sizing: border-box;
     }
 
     .card:hover {
@@ -148,7 +158,7 @@
     }
 
     .card-back {
-        background-color: #fff;
+        background-color: #000000;
         transform: rotateY(180deg);
         display: flex;
         justify-content: center;
@@ -159,6 +169,8 @@
         width: 100%;
         height: 100%;
         border-radius: 15px;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
     }
     h2 {
         font-size: 1.2em;
