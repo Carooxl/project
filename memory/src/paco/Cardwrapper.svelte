@@ -4,11 +4,11 @@
     import Card from "../components/Card.svelte";
 
     let displayedBodies = [];
-    let currentSortKey = "semimajorAxis"; // Default sort key
-    let currentSortDirection = "asc"; // Default sort direction
+    let currentSortKey = "semimajorAxis";
+    let currentSortDirection = "asc";
     const unsubscribe = selectedBodies.subscribe((value) => {
-        displayedBodies = value.slice(); // Make a copy of selected bodies
-        handleSort(currentSortKey); // Sort initially based on the current sort key
+        displayedBodies = value.slice();
+        handleSort(currentSortKey);
     });
 
     function sortPlanets(bodies, key) {
@@ -23,12 +23,12 @@
 
     function handleSort(key) {
         currentSortKey = key;
-        currentSortDirection = "asc"; // Default sorting direction
+        currentSortDirection = "asc";
         displayedBodies = sortPlanets(displayedBodies, key);
     }
 
     onMount(() => {
-        handleSort(currentSortKey); // Ensure initial sorting
+        handleSort(currentSortKey);
         return () => {
             unsubscribe();
         };

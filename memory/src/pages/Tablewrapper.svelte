@@ -51,7 +51,6 @@
 
         $selectedBodies = [...moons, ...asteroids, ...planets];
 
-        // Move selected bodies to the top of the table
         $allBodies = [
             ...$selectedBodies,
             ...$allBodies.filter((body) => !$selectedBodies.includes(body)),
@@ -59,7 +58,6 @@
     }
 
     function resetSelection() {
-        // Move selected bodies to the top of the table
         $allBodies = [
             ...$selectedBodies,
             ...$allBodies.filter((body) => !$selectedBodies.includes(body)),

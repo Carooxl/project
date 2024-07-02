@@ -54,25 +54,17 @@
                 checkPair(selectedCards);
                 previousCards = [...selectedCards];
                 selectedCards = [];
-            }, 500); // Delay the check by 500 milliseconds
+            }, 500);
         }
-    }
-
-    function areSameCards(cards1, cards2) {
-        return (
-            cards1.length === cards2.length &&
-            cards1.every((card, index) => card.id === cards2[index].id)
-        );
     }
 
     function checkPair(cards) {
         if (cards[0][sortKey] === cards[1][sortKey]) {
             pairCount++;
 
-            // Set visible to false for both matched cards
             cards[0].visible = false;
             cards[1].visible = false;
-            // Update shuffledBodies to reflect changes
+
             shuffledBodies = shuffledBodies.map((body) => {
                 if (body.id === cards[0].id || body.id === cards[1].id) {
                     return { ...body, visible: false };
@@ -81,7 +73,6 @@
             });
             selectCategory();
         } else {
-            // Flip the cards back over after a delay
             setTimeout(() => {
                 shuffledBodies = shuffledBodies.map((body) => {
                     if (body.id === cards[0].id || body.id === cards[1].id) {
@@ -90,7 +81,7 @@
                     return body;
                 });
                 setTimeout(selectCategory, 6000);
-            }, 500); // Adjust the delay as needed
+            }, 500);
         }
     }
 

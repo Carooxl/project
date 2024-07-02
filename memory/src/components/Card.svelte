@@ -70,9 +70,7 @@
         updateBackgroundImage();
     });
 
-    onDestroy(() => {
-        // Cleanup logic if needed
-    });
+    onDestroy(() => {});
 
     $: {
         if (sortKey) {
