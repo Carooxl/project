@@ -10,6 +10,7 @@
         isFlipped = !isFlipped;
         dispatch("select", body);
     }
+
     const categories = {
         semimajorAxis: "Große Halbachse",
         meanRadius: "Mittlerer Radius",
@@ -17,8 +18,10 @@
         sideralOrbit: "Siderale Umlaufzeit",
         density: "Dichte",
     };
+
     import { decimalSeparators } from "../utils";
     let backgroundImage = "";
+
     function getMoonBackgroundImage() {
         let moonIndexes = JSON.parse(localStorage.getItem("moonIndexes")) || [];
         if (moonIndexes.length === 4) {
@@ -90,7 +93,7 @@
             <div class="content-wrapper">
                 <h2>{body.englishName}</h2>
                 <h3>{body.bodyType}</h3>
-                <p>{sortKey}: {decimalSeparators(body[sortKey])}</p>
+                <p>{categories[sortKey]}: {decimalSeparators(body[sortKey])}</p>
             </div>
         </div>
         <div class="card-back">
@@ -100,37 +103,26 @@
 </div>
 
 <style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
     .card {
         width: 200px;
         height: 200px;
         background-size: cover;
         background-position: center;
         border-radius: 15px;
-    }
-    .content-wrapper {
-        width: 190px;
-        height: 194px;
-        border: 3px solid rgba(3, 39, 122, 0.5);
-        padding: 5px;
-        border-radius: 10px;
-        box-sizing: border-box;
-    }
-
-    .card:hover {
-        transform: scale(1.05);
+        perspective: 1000px;
+        margin: 10px;
     }
 
     .card-inner {
         position: relative;
         width: 100%;
         height: 100%;
-
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 5px;
-        text-align: center;
         transition: transform 0.6s;
         transform-style: preserve-3d;
     }
@@ -149,7 +141,7 @@
     }
 
     .card-front {
-        background-color: rgb(255, 255, 240);
+        background-color: #f8f9fa;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -158,7 +150,7 @@
     }
 
     .card-back {
-        background-color: #000000;
+        background-color: #000;
         transform: rotateY(180deg);
         display: flex;
         justify-content: center;
@@ -172,17 +164,43 @@
         transition: transform 0.6s;
         transform-style: preserve-3d;
     }
+
+    .content-wrapper {
+        width: 190px;
+        height: 194px;
+        border: 3px solid rgba(3, 39, 122, 0.5);
+        padding: 5px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     h2 {
         font-size: 1.2em;
+        font-family: "Roboto", sans-serif;
+        color: #1b263d;
+        margin: 0.5em 0;
     }
 
     h3 {
         font-size: 1em;
+        font-family: "Roboto", sans-serif;
+        color: #1b263d;
+        margin: 0.3em 0;
     }
 
     p {
         font-size: 0.9em;
-        font-weight: 600;
+        font-weight: 400;
+        font-family: "Roboto", sans-serif;
+        color: #1b263d;
+        margin: 0.3em 0;
     }
 
     @media screen and (max-width: 768px) {
@@ -190,6 +208,7 @@
             width: 150px;
             height: 150px;
         }
+
         h2 {
             font-size: 1em;
             margin: 0.5em 0;
@@ -204,6 +223,11 @@
             font-size: 0.7em;
             font-weight: 500;
             margin: 0.3em 0;
+        }
+
+        .content-wrapper {
+            width: 140px;
+            height: 144px;
         }
     }
 </style>

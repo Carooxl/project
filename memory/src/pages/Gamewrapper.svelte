@@ -46,13 +46,16 @@
 
     function handleCardSelect(event) {
         const selectedBody = event.detail;
+
+        if (selectedCards.length === 2) {
+            return; // Verhindert Auswahl, wenn bereits zwei Karten ausgewählt sind
+        }
+
         selectedCards = [...selectedCards, selectedBody];
 
         if (selectedCards.length === 2) {
-            turnCount++;
             setTimeout(() => {
                 checkPair(selectedCards);
-                previousCards = [...selectedCards];
                 selectedCards = [];
             }, 500);
         }
@@ -71,8 +74,26 @@
                 }
                 return body;
             });
+
+            // Turn count erhöhen, wenn ein neues Paar gefunden wurde
+            turnCount++;
             selectCategory();
+            previousCards = [];
         } else {
+            // Überprüfen, ob die aktuellen Karten die gleichen wie die vorherigen sind
+            if (
+                previousCards.length === 2 &&
+                ((previousCards[0].id === cards[0].id &&
+                    previousCards[1].id === cards[1].id) ||
+                    (previousCards[0].id === cards[1].id &&
+                        previousCards[1].id === cards[0].id))
+            ) {
+                // Turn count nicht erhöhen, wenn die gleichen Karten erneut umgedreht wurden
+            } else {
+                // Turn count erhöhen, wenn andere Karten umgedreht wurden
+                turnCount++;
+            }
+
             setTimeout(() => {
                 shuffledBodies = shuffledBodies.map((body) => {
                     if (body.id === cards[0].id || body.id === cards[1].id) {
@@ -80,8 +101,11 @@
                     }
                     return body;
                 });
-                setTimeout(selectCategory, 6000);
+                setTimeout(selectCategory, 5000);
             }, 500);
+
+            // Die aktuellen Karten als vorherige Karten speichern
+            previousCards = [...cards];
         }
     }
 
@@ -91,10 +115,17 @@
 </script>
 
 <div class="info-container">
-    <p>Aktuelle Kategorie für den Zug: <strong>{sortKey}</strong></p>
-    <p>Anzahl der Züge: <strong>{turnCount}</strong></p>
-    <p>Gefundene Pärchen: <strong>{pairCount}</strong></p>
+    <div class="info-box">
+        <p>Aktuelle Kategorie für den Zug: <strong>{sortKey}</strong></p>
+    </div>
+    <div class="info-box">
+        <p>Anzahl der Züge: <strong>{turnCount}</strong></p>
+    </div>
+    <div class="info-box">
+        <p>Gefundene Pärchen: <strong>{pairCount}</strong></p>
+    </div>
 </div>
+
 <div id="card-container">
     {#each shuffledBodies as body, index}
         {#if body.visible}
@@ -104,18 +135,37 @@
 </div>
 
 <style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
     .info-container {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
         align-items: center;
         margin-top: 30px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .info-container p {
+    .info-box {
+        background-color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-box p {
         margin: 0;
-        padding: 0 10px;
         font-size: 1em;
+        color: #333;
+        font-family: "Roboto", sans-serif;
+        text-align: center;
+    }
+
+    .info-box strong {
+        font-weight: 700;
         color: #1b263d;
     }
 
@@ -123,15 +173,22 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         justify-items: center;
-        gap: 1em;
+        gap: 0.5em;
         color: #222;
         cursor: pointer;
         transition: transform 0.3s ease-in-out;
-        margin-top: 50px;
+        margin-top: 10px;
         margin-bottom: 40px;
     }
 
     @media screen and (max-width: 768px) {
+        .info-container {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+            padding: 10px;
+        }
+
         #card-container {
             display: grid;
             place-items: center;
@@ -140,11 +197,8 @@
             margin-top: 20px;
         }
 
-        .info-container p {
-            margin: 0;
-            padding: 0 10px;
-            font-size: 0.8em;
-            color: #1b263d;
+        .info-box p {
+            font-size: 0.9em;
         }
     }
 </style>

@@ -81,18 +81,29 @@
 </div>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+
+  :global(body) {
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    background-color: #ececec;
+    color: #333;
+  }
+
   #wrapper {
-    max-width: 1428px;
+    max-width: 1200px;
     margin: auto;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #aed7f252;
-    padding: 1em;
+    background-color: #c6c6c7;
+    padding: 2em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   nav {
     width: 100%;
+    margin-bottom: 20px;
   }
 
   nav ul {
@@ -101,6 +112,7 @@
     justify-content: center;
     align-items: center;
     padding: 0;
+    border-bottom: 2px solid #ddd;
   }
 
   nav ul li {
@@ -108,16 +120,35 @@
   }
 
   nav ul li a {
-    color: white;
+    color: #333;
     text-decoration: none;
+    padding: 0.5em 1em;
+    transition:
+      color 0.3s,
+      border-bottom 0.3s;
   }
-  .active {
+
+  nav ul li a:hover,
+  nav ul li a.active {
+    color: #333;
+    border-bottom: 2px solid #333;
+  }
+  nav ul li a.active {
     font-weight: bold;
+  }
+
+  main {
+    flex: 1;
   }
 
   footer {
     width: 100%;
+    padding: 1em 0;
+    background-color: #b6b6b9;
+    border-top: 1px solid #ddd;
+    margin-top: 2em;
   }
+
   footer ul {
     list-style: none;
     display: flex;
@@ -131,7 +162,53 @@
   }
 
   footer ul li a {
-    color: white;
+    color: #333;
     text-decoration: none;
+  }
+
+  footer ul li a:hover {
+    color: #007bff;
+  }
+
+  @media screen and (max-width: 768px) {
+    #wrapper {
+      padding: 1em;
+    }
+    nav {
+      margin-bottom: 0px;
+    }
+    nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+      border-bottom: none;
+    }
+
+    nav ul li {
+      margin: 0.5em 0;
+    }
+
+    nav ul li a {
+      padding: 0.5em;
+      border-bottom: none;
+    }
+
+    nav ul li a.active {
+      border-bottom: none;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+    }
+
+    footer ul {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    footer ul li {
+      margin: 0.5em 0;
+    }
+
+    footer ul li a {
+      padding: 0.5em;
+    }
   }
 </style>

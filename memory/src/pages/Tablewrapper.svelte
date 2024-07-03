@@ -140,7 +140,7 @@
     button {
         width: 150px;
         padding: 10px 20px;
-        background-color: rgba(27, 38, 61, 0.6);
+        background-color: rgba(13, 24, 45);
         color: white;
         border: none;
         border-radius: 5px;
@@ -151,15 +151,15 @@
     }
 
     button:hover {
-        background-color: rgba(45, 57, 83, 0.5);
+        background-color: rgba(45, 57, 83);
     }
 
     .reset-button {
-        background-color: rgba(27, 38, 61, 0.6);
+        background-color: rgba(13, 24, 45);
     }
 
     .reset-button:hover {
-        background-color: rgba(45, 57, 83, 0.5);
+        background-color: rgba(45, 57, 83);
     }
 
     table {
@@ -194,11 +194,13 @@
 
     tr:hover {
         background-color: #2d3953;
+        color: #e1dfdf;
     }
 
     .highlight {
-        background-color: #2d3953 !important;
+        background-color: #303953c4 !important;
         opacity: 80%;
+        color: #e1dfdf;
     }
     thead tr:hover {
         background-color: transparent;
@@ -206,9 +208,9 @@
     thead {
         position: sticky;
         top: 0;
-        background-color: #1b263d;
-        opacity: 80%;
+        background-color: rgba(13, 24, 45);
         z-index: 1;
+        color: #e1dfdf;
     }
     thead th.optional {
         display: none;

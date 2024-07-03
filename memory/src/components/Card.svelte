@@ -97,7 +97,7 @@
     .content-wrapper {
         width: 190px;
         height: 194px;
-        border: 3px solid rgba(3, 39, 122, 0.5);
+        border: 3px solid rgb(13, 24, 45);
         padding: 5px;
         border-radius: 10px;
         box-sizing: border-box;

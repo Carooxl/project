@@ -4,7 +4,7 @@
 
 <style>
     header {
-        color: #fff;
+        color: #333;
         display: flex;
         flex-direction: column;
         align-items: center;

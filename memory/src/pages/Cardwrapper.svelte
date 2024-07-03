@@ -56,7 +56,7 @@
     button {
         width: 150px;
         padding: 10px 20px;
-        background-color: rgba(27, 38, 61, 0.6);
+        background-color: rgba(13, 24, 45);
         color: white;
         border: none;
         border-radius: 5px;
@@ -67,15 +67,15 @@
     }
 
     button:hover {
-        background-color: rgba(45, 57, 83, 0.5);
+        background-color: rgba(45, 57, 83);
     }
 
     .reset-button {
-        background-color: rgba(27, 38, 61, 0.6);
+        background-color: rgba(13, 24, 45);
     }
 
     .reset-button:hover {
-        background-color: rgba(45, 57, 83, 0.5);
+        background-color: rgba(45, 57, 83);
     }
 
     #card-container {
@@ -91,11 +91,15 @@
 
     @media screen and (max-width: 768px) {
         .button-container {
+            flex-direction: column;
+            align-items: center;
             gap: 0.5em;
+            margin-top: 0px;
         }
 
         button {
-            width: 120px;
+            width: 100%;
+            max-width: 300px;
             padding: 8px 16px;
             font-size: 0.8em;
         }
@@ -103,7 +107,7 @@
         #card-container {
             grid-template-columns: repeat(2, 1fr);
             gap: 0.5em;
-            margin-top: 20px;
+            margin-top: 40px;
         }
     }
 </style>
